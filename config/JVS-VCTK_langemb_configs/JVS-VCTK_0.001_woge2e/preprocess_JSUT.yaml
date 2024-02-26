@@ -1,0 +1,15 @@
+dataset: "JSUT"
+
+path:
+  corpus_path: "/path/to/jsut"
+  lexicon_path: ""
+  raw_path: "./raw_data/JSUT"
+  lab_path: "./lab/JSUT"
+  preprocessed_path: "./preprocessed_data/JSUT"
+
+text:
+  text_cleaners: ["english_cleaners"]
+  language: "ja"
+
+accent:
+  use_accent: True

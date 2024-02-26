@@ -1,0 +1,60 @@
+training: !!bool "true"
+device: "cuda"
+datasets:
+    VCTK:
+        root: '/home/sarulab/aya_watanabe/デスクトップ/work/corpus/vctk/VCTK-Corpus'
+        test_speakers: ['p226', 'p241', 'p245', 'p265', 'p280', 'p303', 'p311', 'p339']
+    JVS:
+        root: '/home/sarulab/aya_watanabe/デスクトップ/work/corpus/jvs/jvs_ver1.1'
+        test_speakers: ['jvs001', 'jvs014', 'jvs021', 'jvs036', 'jvs071', 'jvs084', 'jvs092', 'jvs098']
+train_datasets: ['JVS', 'VCTK']
+test_speaker_per_dataset: 8
+
+---
+data:
+    train_path: './train_mel'
+    test_path: './test_mel'
+    data_preprocessed: !!bool "true" 
+    sr: 22050
+    nfft: 1024 # For mel spectrogram preprocess
+    window: 1024
+    hop: 256
+    nmels: 80 #Number of mel energies
+    tisv_frame: 150 #Max number of time steps in input after preprocess
+    fmin: 0
+    fmax: 8000
+---   
+model:
+    hidden: 256 #Number of LSTM hidden layer units
+    num_layer: 3 #Number of LSTM layers
+    proj: 64 #Embedding size
+    model_name: 'sg_discriminator_woGE2E' #Model path for testing, inference, or resuming training
+    loss: 'softmax'
+    da: true
+    da_on: 'language'
+    da_startpoint: 0
+    lang_emb_dim: 32
+    architecture: 'LSTM'
+---
+train:
+    N : 32 #Number of speakers in batch
+    M : 10 #Number of utterances per speaker
+    num_workers: 0 #number of workers for dataloader
+    lr: 0.001 
+    epochs: 2400 #Max training speaker epoch 
+    log_interval: 5 #Epochs before printing progress
+    log_file: './log.txt'
+    checkpoint_interval: 200 #Save model after x speaker epochs
+    checkpoint_dir: './output_woGE2E'
+    restore: false #Resume training from previous model path
+    start_epoch: 0
+    anneal_epochs: [800, 1400, 1800, 2200]
+    parallel: false
+    k: 5
+    optimizer: 'Adam'
+---
+test:
+    N : 6 #Number of speakers in batch
+    M : 10 #Number of utterances per speaker
+    num_workers: 8 #number of workers for data laoder
+    epochs: 30 #testing speaker epochs

@@ -1,0 +1,15 @@
+dataset: "JVS"
+
+path:
+  corpus_path: "/path_to_jvs"
+  lexicon_path: ""
+  raw_path: "./raw_data/JVS"
+  lab_path: "./lab/JVS"
+  preprocessed_path: "./preprocessed_data/JVS"
+
+text:
+  text_cleaners: ["english_cleaners"]
+  language: "ja"
+
+accent:
+  use_accent: True

@@ -1,0 +1,15 @@
+dataset: "VCTK"
+
+path:
+  corpus_path: "/path/to/vctk
+  lexicon_path: ""
+  raw_path: "./raw_data/VCTK"
+  lab_path: "./lab/VCTK"
+  preprocessed_path: "./preprocessed_data/VCTK"
+
+text:
+  text_cleaners: ["english_cleaners"]
+  language: "en"
+
+accent:
+  use_accent: False
